@@ -1,6 +1,10 @@
 echo "Executing shell inside container..."
 echo "hostname: `hostname`"
 echo "ip addr: `ip addr | grep inet | grep -v 127.0.0.1 | awk '{print $2}'`"
+echo "alpine-release: `cat /etc/alpine-release`"
+echo "python version: `python --version`"
+echo "node kernel: `uname -r`"
+echo "node uptime: `uptime`"
 
 parse_git_branch() {
      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
