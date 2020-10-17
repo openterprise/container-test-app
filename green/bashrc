@@ -1,3 +1,7 @@
+echo "Executing shell inside container..."
+echo "hostname: `hostname`"
+echo "ip addr: `ip addr | grep inet | grep -v 127.0.0.1 | awk '{print $2}'`"
+
 parse_git_branch() {
      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
