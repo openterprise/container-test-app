@@ -5,7 +5,7 @@ WORKDIR /app
 ADD . /app/
 RUN pip install -r requirements.txt
 
-RUN apk add --no-cache lsblk curl vim openssh-client busybox-extras htop
+RUN apk add --no-cache lsblk curl vim openssh-client busybox-extras htop mc openssl
 
 EXPOSE 5000
 CMD ["python", "/app/main.py"]
