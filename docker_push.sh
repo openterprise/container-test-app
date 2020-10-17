@@ -10,4 +10,7 @@ cd ../red
 docker push openterprise/red:latest &
 cd ../yellow
 docker push openterprise/yellow:latest &
-
+cd ../purple
+docker push openterprise/purple:latest &
+cd ../brown
+docker push openterprise/brown:latest &
