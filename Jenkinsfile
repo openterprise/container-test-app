@@ -4,7 +4,7 @@ node('docker-host') {
         checkout scm
 
     stage 'Build new app container on test'
-        docker.build("openterprise/blue:latest", "./blue/")
+        def customImage = docker.build("openterprise/blue:latest", "./blue/")
 
     stage 'Test new app'
         try {
@@ -22,7 +22,11 @@ node('docker-host') {
         sh 'curl --connect-timeout 3 http://docker-host:8000'
 
     stage 'Docker push to DockerHub repo'
-        docker.push("openterprise/blue:latest")
+
+        customImage.push()
+
+        customImage.push('latest')
+
 
     stage 'Cleanup on test'
         try {
