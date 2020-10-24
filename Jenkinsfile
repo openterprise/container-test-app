@@ -4,7 +4,7 @@ node('docker-host') {
         checkout scm
 
     stage 'Build new app container on test'
-        docker.build("openterprise/blue", "./blue/")
+        docker.build("openterprise/blue:latest", "./blue/")
 
     stage 'Test new app'
         try {
@@ -20,6 +20,9 @@ node('docker-host') {
         sh 'docker run -d -p 8000:5000 --name my_app_test my_docker_flask:latest'
         sleep 2
         sh 'curl --connect-timeout 3 http://docker-host:8000'
+
+    stage 'Docker pull to DockerHub repo'
+        docker.pull("openterprise/blue:latest")
 
     stage 'Cleanup on test'
         try {
