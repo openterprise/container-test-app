@@ -4,7 +4,7 @@ node('docker-host') {
         checkout scm
 
     stage 'Build new app container on test'
-        docker.build("my_docker_flask:latest", "./hello_docker_flask")
+        docker.build("openterprise/blue", "./blue/Dockerfile")
 
     stage 'Test new app'
         try {
