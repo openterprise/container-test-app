@@ -8,16 +8,16 @@ node('docker-host') {
 
     stage 'Test new app'
         try {
-            sh 'docker stop my_app_test'
+            sh 'docker stop app_blue'
         } catch (err) {
             echo "There was no running old test container, nothing to stop"
         }
         try {
-            sh 'docker rm my_app_test'
+            sh 'docker rm app_blue'
         } catch (err) {
             echo "There was no old test container, nothing to remove"
         }
-        sh 'docker run -d -p 8000:5000 --name my_app_test my_docker_flask:latest'
+        sh 'docker run -d -p 8000:5000 --name app_blue openterprise/blue:latest'
         sleep 2
         sh 'curl --connect-timeout 3 http://docker-host:8000'
 
@@ -26,12 +26,12 @@ node('docker-host') {
 
     stage 'Cleanup on test'
         try {
-            sh 'docker stop my_app_test'
+            sh 'docker stop app_blue'
         } catch (err) {
             echo "There was no running old test container, nothing to stop"
         }
         try {
-            sh 'docker rm my_app_test'
+            sh 'docker rm app_blue'
         } catch (err) {
             echo "There was no old test container, nothing to remove"
         }
