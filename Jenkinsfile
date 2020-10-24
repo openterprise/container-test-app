@@ -42,25 +42,20 @@ node('docker-host') {
         sh 'docker image prune -f'
 }
 
-node('docker.openterprise.it') {
-    stage 'Pull code from Git on prod'
-        checkout scm
-
-    stage 'Build new app container on prod'
-        docker.build("my_docker_flask:latest", "./hello_docker_flask")
+node('docker-host-public') {
 
     stage 'Run new container app on prod'
         try {
-            sh 'docker stop my_app'
+            sh 'docker stop app_blue'
         } catch (err) {
             echo "There was no running old container, nothing to stop"
         }
         try {
-            sh 'docker rm my_app'
+            sh 'docker rm app_blue'
         } catch (err) {
             echo "There was no old container, nothing to remove"
         }
-        sh 'docker run -d -p 8000:5000 --name my_app my_docker_flask:latest'
+        sh 'docker run -d -p 8000:5000 --name app_blue openterprise/blue:latest'
         sleep 2
         sh 'curl --connect-timeout 3 http://docker.openterprise.it:8000'
         
