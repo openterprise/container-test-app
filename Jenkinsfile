@@ -4,7 +4,7 @@ node('docker-host') {
         checkout scm
 
     stage 'Build new app container on test'
-        docker.build("openterprise/blue", "./blue/Dockerfile")
+        docker.build("openterprise/blue", "./blue/")
 
     stage 'Test new app'
         try {
