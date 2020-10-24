@@ -22,7 +22,7 @@ node('docker-host') {
         sh 'curl --connect-timeout 3 http://docker-host:8000'
 
     stage 'Docker pull to DockerHub repo'
-        docker.pull("openterprise/blue:latest")
+        docker.push("openterprise/blue:latest")
 
     stage 'Cleanup on test'
         try {
