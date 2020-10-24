@@ -1,12 +1,12 @@
 
 node('docker-host') {
-    stage 'Pull code from Git on test'
+    stage '[test] pull code from GitHub'
         checkout scm
 
-    stage 'Build new app container on test'
+    stage '[test] build container'
         def customImage = docker.build("openterprise/blue:latest", "./blue/")
 
-    stage 'Test new app'
+    stage '[test] run container'
         try {
             sh 'docker stop app_blue'
         } catch (err) {
@@ -21,14 +21,11 @@ node('docker-host') {
         sleep 2
         sh 'curl --connect-timeout 3 http://docker-host:8000'
 
-    stage 'Docker push to DockerHub repo'
-
+    stage '[test] push container to DockerHub'
         customImage.push()
-
         customImage.push('latest')
 
-
-    stage 'Cleanup on test'
+    stage '[test] cleanup'
         try {
             sh 'docker stop app_blue'
         } catch (err) {
@@ -43,8 +40,7 @@ node('docker-host') {
 }
 
 node('docker-host-public') {
-
-    stage 'Run new container app on prod'
+    stage '[prod] run container'
         try {
             sh 'docker stop app_blue'
         } catch (err) {
@@ -59,7 +55,6 @@ node('docker-host-public') {
         sleep 2
         sh 'curl --connect-timeout 3 http://docker.openterprise.it:8000'
         
-    stage 'Cleanup on prod'
+    stage '[prod] cleanup'
         sh 'docker image prune -f'
 }
-
