@@ -1,4 +1,12 @@
 
+parameters {
+    choice(
+      name: 'color',
+      choices: ['blue', 'green', 'red', 'yellow'],
+      description: 'Passing the color'
+    )
+  }
+
 node('docker-host') {
     stage '[test] pull code from GitHub'
         checkout scm
