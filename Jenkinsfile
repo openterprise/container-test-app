@@ -18,7 +18,7 @@ node('docker-host') {
 
     stage '[test] run container'
         try {
-            sh "docker stop app_${params.color}"
+            sh "docker stop `docker ps | grep 8000 | awk '{print $1}'`"
         } catch (err) {
             echo "There was no running old test container, nothing to stop"
         }
@@ -37,7 +37,7 @@ node('docker-host') {
 
     stage '[test] cleanup'
         try {
-            sh "docker stop app_${params.color}"
+            sh "docker stop `docker ps | grep 8000 | awk '{print $1}'`"
         } catch (err) {
             echo "There was no running old test container, nothing to stop"
         }
@@ -52,7 +52,7 @@ node('docker-host') {
 node('docker-host-public') {
     stage '[prod] run container'
         try {
-            sh "docker stop app_${params.color}"
+            sh "docker stop `docker ps | grep 8000 | awk '{print $1}'`"
         } catch (err) {
             echo "There was no running old container, nothing to stop"
         }
