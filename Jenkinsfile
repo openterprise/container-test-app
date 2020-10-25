@@ -1,5 +1,4 @@
 
-
 properties(
     [
         parameters(
@@ -15,20 +14,20 @@ node('docker-host') {
         echo "${params.color}" 
 
     stage '[test] build container'
-        def customImage = docker.build("openterprise/blue:latest", "./blue/")
+        def customImage = docker.build("openterprise/${params.color}:latest", "./${params.color}/")
 
     stage '[test] run container'
         try {
-            sh 'docker stop app_blue'
+            sh "docker stop app_${params.color}"
         } catch (err) {
             echo "There was no running old test container, nothing to stop"
         }
         try {
-            sh 'docker rm app_blue'
+            sh "docker rm app_${params.color}"
         } catch (err) {
             echo "There was no old test container, nothing to remove"
         }
-        sh 'docker run -d -p 8000:5000 --name app_blue openterprise/blue:latest'
+        sh "docker run -d -p 8000:5000 --name app_${params.color} openterprise/${params.color}:latest"
         sleep 2
         sh 'curl --connect-timeout 3 http://docker-host:8000'
 
@@ -38,12 +37,12 @@ node('docker-host') {
 
     stage '[test] cleanup'
         try {
-            sh 'docker stop app_blue'
+            sh "docker stop app_${params.color}"
         } catch (err) {
             echo "There was no running old test container, nothing to stop"
         }
         try {
-            sh 'docker rm app_blue'
+            sh "docker rm app_${params.color}"
         } catch (err) {
             echo "There was no old test container, nothing to remove"
         }
@@ -53,16 +52,16 @@ node('docker-host') {
 node('docker-host-public') {
     stage '[prod] run container'
         try {
-            sh 'docker stop app_blue'
+            sh "docker stop app_${params.color}"
         } catch (err) {
             echo "There was no running old container, nothing to stop"
         }
         try {
-            sh 'docker rm app_blue'
+            sh "docker rm app_${params.color}"
         } catch (err) {
             echo "There was no old container, nothing to remove"
         }
-        sh 'docker run -d -p 8000:5000 --name app_blue openterprise/blue:latest'
+        sh "docker run -d -p 8000:5000 --name app_${params.color} openterprise/${params.color}:latest"
         sleep 2
         sh 'curl --connect-timeout 3 http://docker.openterprise.it:8000'
         
