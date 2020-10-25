@@ -2,16 +2,16 @@
 properties(
     [
         parameters(
-            [choice(name: 'color', 
-            choices: "blue\ngreen\nred\nyellow\norange\nbrown\mpurple",
+            [choice(name: 'color',
+            choices: "blue\ngreen\nred\nyellow\borange\nbrown\mpurple",
             description: 'Passing the color')]
         )
-    ])    
+    ])
 
 node('docker-host') {
     stage '[test] pull code from GitHub'
         checkout scm
-        echo "${params.color}" 
+        echo "${params.color}"
 
     stage '[test] build container'
         def customImage = docker.build("openterprise/${params.color}:latest", "./${params.color}/")
@@ -64,7 +64,7 @@ node('docker-host-public') {
         sh "docker run -d -p 8000:5000 --name app_${params.color} openterprise/${params.color}:latest"
         sleep 2
         sh 'curl --connect-timeout 3 http://docker.openterprise.it:8000'
-        
+
     stage '[prod] cleanup'
         sh 'docker image prune -f'
 }
