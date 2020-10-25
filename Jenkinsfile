@@ -10,7 +10,7 @@ parameters {
 node('docker-host') {
     stage '[test] pull code from GitHub'
         checkout scm
-        echo ${params.color} 
+        echo "${params.color}" 
 
     stage '[test] build container'
         def customImage = docker.build("openterprise/blue:latest", "./blue/")
