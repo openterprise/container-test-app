@@ -75,5 +75,3 @@ agent('docker-host-public') {
 }
 
 }
-
-}
