@@ -12,7 +12,7 @@ parameters {
 
 stages {
 
-node('docker-host') {
+agent('docker-host') {
     stage '[test] pull code from GitHub'
         checkout scm
         echo "${params.color}" 
@@ -53,7 +53,7 @@ node('docker-host') {
         sh 'docker image prune -f'
 }
 
-node('docker-host-public') {
+agent('docker-host-public') {
     stage '[prod] run container'
         try {
             sh 'docker stop app_blue'
