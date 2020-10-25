@@ -1,6 +1,7 @@
 
 pipeline {
 
+agent any 
 parameters {
     choice(
       name: 'color',
@@ -11,8 +12,9 @@ parameters {
 
 stages {
 
-agent('docker-host') {
+
     stage '[test] pull code from GitHub'
+        agent('docker-host')
         checkout scm
         echo "${params.color}" 
 
