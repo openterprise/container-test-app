@@ -1,21 +1,13 @@
 
-parameters {
-    
-  }
-
 
 properties(
     [
         parameters(
-            [choice(
-      name: 'color',
-      choices: "blue\ngreen\nred\nyellow",
-      description: 'Passing the color'
-    )]
-            )
-
-    ]
-    )    
+            [choice(name: 'color', 
+            choices: "blue\ngreen\nred\nyellow\orange\nbrown\mpurple",
+            description: 'Passing the color')]
+        )
+    ])    
 
 node('docker-host') {
     stage '[test] pull code from GitHub'
