@@ -51,6 +51,9 @@ node('docker-host') {
 }
 
 node('docker-host-public') {
+    stare '[prod] pull cointainer'
+        sh "docker pull openterprise/${params.color}:latest"
+
     stage '[prod] run container'
         try {
             sh 'docker stop `docker ps | grep 8000 | awk \'{print $1}\'`'
