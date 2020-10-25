@@ -1,4 +1,7 @@
 
+pipeline {
+
+agent any 
 parameters {
     choice(
       name: 'color',
@@ -6,6 +9,8 @@ parameters {
       description: 'Passing the color'
     )
   }
+
+stages {
 
 node('docker-host') {
     stage '[test] pull code from GitHub'
@@ -66,4 +71,8 @@ node('docker-host-public') {
         
     stage '[prod] cleanup'
         sh 'docker image prune -f'
+}
+
+}
+
 }
