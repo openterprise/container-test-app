@@ -1,6 +1,4 @@
 
-pipeline {
-
 parameters {
     choice(
       name: 'color',
@@ -12,6 +10,7 @@ parameters {
 node('docker-host') {
     stage '[test] pull code from GitHub'
         checkout scm
+        echo ${color} 
 
     stage '[test] build container'
         def customImage = docker.build("openterprise/blue:latest", "./blue/")
@@ -67,6 +66,4 @@ node('docker-host-public') {
         
     stage '[prod] cleanup'
         sh 'docker image prune -f'
-}
-
 }
