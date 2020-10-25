@@ -20,7 +20,10 @@ stages {
     }
 
     stage ('[test] build container') {
-        def customImage = docker.build("openterprise/blue:latest", "./blue/")
+        steps {
+            def customImage = docker.build("openterprise/blue:latest", "./blue/")
+        }
+        
     }  
 
     stage '[test] run container'
