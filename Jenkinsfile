@@ -1,30 +1,29 @@
 
-pipeline {
-
-agent { node { label 'docker-host' } }  
 parameters {
-    choice(
+    
+  }
+
+
+properties(
+    [
+        parameters(
+            [choice(
       name: 'color',
       choices: "blue\ngreen\nred\nyellow",
       description: 'Passing the color'
-    )
-  }
+    )]
+            )
 
-stages {
+    ]
+    )    
 
-    stage ('[test] pull code from GitHub') {
-        steps {
+node('docker-host') {
+    stage '[test] pull code from GitHub'
         checkout scm
         echo "${params.color}" 
-        }
-    }
 
-    stage ('[test] build container') {
-        steps {
-            def customImage = docker.build("openterprise/blue:latest", "./blue/")
-        }
-        
-    }  
+    stage '[test] build container'
+        def customImage = docker.build("openterprise/blue:latest", "./blue/")
 
     stage '[test] run container'
         try {
@@ -59,7 +58,7 @@ stages {
         sh 'docker image prune -f'
 }
 
-agent('docker-host-public') {
+node('docker-host-public') {
     stage '[prod] run container'
         try {
             sh 'docker stop app_blue'
@@ -77,6 +76,4 @@ agent('docker-host-public') {
         
     stage '[prod] cleanup'
         sh 'docker image prune -f'
-}
-
 }
