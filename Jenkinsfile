@@ -46,6 +46,7 @@ node('docker-host') {
         } catch (err) {
             echo "There was no old test container, nothing to remove"
         }
+        sh 'docker container prune -f'
         sh 'docker image prune -f'
 }
 
@@ -66,5 +67,6 @@ node('docker-host-public') {
         sh 'curl --connect-timeout 3 http://docker.openterprise.it:8000'
 
     stage '[prod] cleanup'
+        sh 'docker container prune -f'
         sh 'docker image prune -f'
 }
