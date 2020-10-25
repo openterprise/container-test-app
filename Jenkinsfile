@@ -13,13 +13,15 @@ parameters {
 stages {
 
 
-    stage '[test] pull code from GitHub'
+    stage ('[test] pull code from GitHub') {
         agent('docker-host')
         checkout scm
         echo "${params.color}" 
+    }
 
-    stage '[test] build container'
+    stage ('[test] build container') {
         def customImage = docker.build("openterprise/blue:latest", "./blue/")
+    }  
 
     stage '[test] run container'
         try {
