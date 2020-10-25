@@ -1,4 +1,6 @@
 
+pipeline {
+
 parameters {
     choice(
       name: 'color',
@@ -65,4 +67,6 @@ node('docker-host-public') {
         
     stage '[prod] cleanup'
         sh 'docker image prune -f'
+}
+
 }
