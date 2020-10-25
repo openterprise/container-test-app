@@ -2,7 +2,7 @@
 parameters {
     choice(
       name: 'color',
-      choices: ['blue', 'green', 'red', 'yellow'],
+      choices: "blue\ngreen\nred\nyellow",
       description: 'Passing the color'
     )
   }
