@@ -1,7 +1,7 @@
 
 pipeline {
 
-agent agent { node { label 'docker-host' } }  
+agent { node { label 'docker-host' } }  
 parameters {
     choice(
       name: 'color',
@@ -13,8 +13,10 @@ parameters {
 stages {
 
     stage ('[test] pull code from GitHub') {
+        steps {
         checkout scm
         echo "${params.color}" 
+        }
     }
 
     stage ('[test] build container') {
