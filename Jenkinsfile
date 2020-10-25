@@ -51,7 +51,7 @@ node('docker-host') {
 }
 
 node('docker-host-public') {
-    stare '[prod] pull cointainer'
+    stage '[prod] pull cointainer'
         sh "docker pull openterprise/${params.color}:latest"
 
     stage '[prod] run container'
