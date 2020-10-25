@@ -3,7 +3,7 @@ properties(
     [
         parameters(
             [choice(name: 'color', 
-            choices: "blue\ngreen\nred\nyellow\orange\nbrown\mpurple",
+            choices: "blue\ngreen\nred\nyellow\norange\nbrown\mpurple",
             description: 'Passing the color')]
         )
     ])    
