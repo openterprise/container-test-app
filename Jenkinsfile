@@ -6,7 +6,7 @@ properties(
             choices: "blue\ngreen\nred\nyellow\norange\nbrown\npurple",
             description: 'Passing the color')]
         ),
-        pipelineTriggers([cron('0 * * * *')])
+        pipelineTriggers([cron('0 23 * * *')])
     ])
 
 node('docker-host') {
