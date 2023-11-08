@@ -18,7 +18,9 @@ def generate_load():
 @app.route("/orange/")
 def hello():
 
-    return "🟧 orange service host: "+socket.gethostname()+"\n"
+    hostname = socket.gethostname()
+    ip_address = socket.gethostbyname(hostname)
+    return "🟧 orange container hostname: {}, container IP: {}\n".format(hostname,ip_address)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
