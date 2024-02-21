@@ -16,6 +16,10 @@ def generate_load():
 @app.route("/")
 @app.route("/red")
 @app.route("/red/")
+@app.route("/healthz")
+@app.route("/healthz/")
+@app.route("/healthz/live")
+@app.route("/healthz/ready")
 def hello():
 
     hostname = socket.gethostname()
